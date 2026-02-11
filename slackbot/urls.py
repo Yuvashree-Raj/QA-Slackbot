@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import gen_tests
+from .views import slack_generate_testcases
 
 urlpatterns = [
-    path("gen-tests/", gen_tests),
+    path("gen-tests/", slack_generate_testcases),
 ]
