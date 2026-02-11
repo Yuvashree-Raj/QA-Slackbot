@@ -1,7 +1,7 @@
 
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from .services.ai_service import generate_testcases
+from .utils import generate_testcases
 
 
 @csrf_exempt
