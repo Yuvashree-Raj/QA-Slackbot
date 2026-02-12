@@ -22,4 +22,4 @@ def slack_generate_testcases(request):
             "text": ai_output
         })
 
-    return JsonResponse({"text": "Invalid request method."})
+    return JsonResponse({"text": "Invalid request method"})

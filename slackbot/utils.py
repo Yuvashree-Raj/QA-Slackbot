@@ -1,17 +1,18 @@
 import os
-import requests
+import google.generativeai as genai
 
-HF_TOKEN = os.getenv("HF_TOKEN")
-HF_MODEL = os.getenv("HF_MODEL", "mistralai/Mistral-7B-Instruct-v0.2")
+# Load API key from environment
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-HF_API_URL = f"https://router.huggingface.co/hf-inference/models/{HF_MODEL}"
+# Use lightweight free-tier friendly model
+MODEL_NAME = "gemini-1.5-flash"
 
 
 def generate_testcases(feature_description):
-    if not HF_TOKEN:
-        return "HF_TOKEN not configured in environment variables."
+    try:
+        model = genai.GenerativeModel(MODEL_NAME)
 
-    prompt = f"""
+        prompt = f"""
 You are a professional QA engineer.
 
 Generate structured frontend test cases.
@@ -19,7 +20,6 @@ Generate structured frontend test cases.
 STRICT RULES:
 - Output ONLY in markdown table format.
 - Do NOT explain anything.
-- Follow this exact structure:
 
 | Test Case ID | Test Case Title | Preconditions | Test Steps | Expected Result |
 |--------------|----------------|--------------|------------|----------------|
@@ -28,29 +28,9 @@ Feature Description:
 {feature_description}
 """
 
-    headers = {
-        "Authorization": f"Bearer {HF_TOKEN}",
-        "Content-Type": "application/json"
-    }
+        response = model.generate_content(prompt)
 
-    payload = {
-        "inputs": prompt,
-        "parameters": {
-            "max_new_tokens": 800,
-            "temperature": 0.3,
-        }
-    }
+        return response.text
 
-    try:
-        response = requests.post(HF_API_URL, headers=headers, json=payload, timeout=60)
-        response.raise_for_status()
-
-        result = response.json()
-
-        if isinstance(result, list):
-            return result[0].get("generated_text", "No output generated.")
-
-        return str(result)
-
-    except requests.exceptions.RequestException as e:
-        return f"Error calling Hugging Face API: {str(e)}"
+    except Exception as e:
+        return f"Error calling Gemini API: {str(e)}"
