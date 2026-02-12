@@ -5,7 +5,8 @@ import google.generativeai as genai
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Use lightweight free-tier friendly model
-MODEL_NAME = "gemini-1.5-flash"
+
+MODEL_NAME = "gemini-flash-latest"
 
 
 def generate_testcases(feature_description):
