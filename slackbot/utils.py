@@ -14,20 +14,38 @@ def generate_testcases(feature_description):
         model = genai.GenerativeModel(MODEL_NAME)
 
         prompt = f"""
-You are a professional QA engineer.
+You are a senior QA engineer.
 
-Generate structured frontend test cases.
+TASK:
+Generate exactly 100 high-priority Manual Frontend test cases.
 
-STRICT RULES:
-- Output ONLY in markdown table format.
-- Do NOT explain anything.
+FOCUS:
+- Edge cases
+- Negative scenarios
+- Boundary conditions
+- Permission violations
+- Validation failures
+- Critical user flows
 
-| Test Case ID | Test Case Title | Preconditions | Test Steps | Expected Result |
-|--------------|----------------|--------------|------------|----------------|
+RULES:
+- Start every test case with "Verify that"
+- One assertion per test case
+- No explanations
+- No markdown formatting
+- No summary
+- Number sequentially from 1 to 100
+- Organize by feature component
 
-Feature Description:
+DISTRIBUTION:
+- ~35 Positive
+- ~35 Negative
+- ~20 Edge
+- ~10 Boundary
+
+PRODUCT SPECIFICATION:
 {feature_description}
 """
+
 
         response = model.generate_content(prompt)
 
