@@ -19,32 +19,43 @@ You are a senior QA engineer.
 TASK:
 Generate exactly 100 high-priority Manual Frontend test cases.
 
-FOCUS:
-- Edge cases
-- Negative scenarios
-- Boundary conditions
-- Permission violations
-- Validation failures
-- Critical user flows
+ORGANIZATION RULES:
+1. Identify major feature components from the product specification.
+2. Organize test cases feature-wise.
+3. Under each feature, group test cases into:
+   - Positive Cases
+   - Negative Cases
+   - Edge Cases
+   - Boundary Cases
+4. Number test cases sequentially from 1 to 100 across all features.
+5. Each test case must start with "Verify that".
+6. One assertion per test case.
+7. No explanations.
+8. Follow this exact structure format:
 
-RULES:
-- Start every test case with "Verify that"
-- One assertion per test case
-- No explanations
-- No markdown formatting
-- No summary
-- Number sequentially from 1 to 100
-- Organize by feature component
+OUTPUT FORMAT:
 
-DISTRIBUTION:
-- ~35 Positive
-- ~35 Negative
-- ~20 Edge
-- ~10 Boundary
+## 1. [Feature Name] (X test cases)
+
+### Positive Cases
+1. Verify that ...
+2. Verify that ...
+
+### Negative Cases
+...
+
+### Edge Cases
+...
+
+### Boundary Cases
+...
+
+Continue this structure for all features until 100 test cases are generated.
 
 PRODUCT SPECIFICATION:
 {feature_description}
 """
+
 
 
         response = model.generate_content(prompt)
