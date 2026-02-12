@@ -11,7 +11,7 @@ def process_ai(feature_description, response_url):
     ai_output = generate_testcases(feature_description)
 
     requests.post(response_url, json={
-        "response_type": "in_channel",
+        "response_type": "in_channel", 
         "text": ai_output
     })
 
