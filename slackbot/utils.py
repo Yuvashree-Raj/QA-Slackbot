@@ -60,7 +60,23 @@ PRODUCT SPECIFICATION:
 
         response = model.generate_content(prompt)
 
-        return response.text
+        # Format the output with product spec and test cases
+        formatted_output = f"""
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 PRODUCT SPECIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+{feature_description}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ GENERATED TEST CASES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+{response.text}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"""
+        return formatted_output.strip()
 
     except Exception as e:
-        return f"Error calling Gemini API: {str(e)}"
+        return f"❌ Error calling Gemini API: {str(e)}"
